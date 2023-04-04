@@ -9,7 +9,7 @@ function show_webshop($data){
 }
 
 function show_product_in_overview($product, $data){
-    echo '<a class="product_link" href="\educom-webshop-database/index.php?page=webshop&id='. $product->get_id() .'">
+    echo '<a class="product_link" href="index.php?page=webshop&id='. $product->get_id() .'">
     <div class="product">
     <p >'. $product->get_name() . '</p>
     <img src="Images/'. $product->get_image_location().'" alt="image of '. $product->get_id() .'">

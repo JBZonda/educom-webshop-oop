@@ -20,7 +20,7 @@ function show_body_start(){
 }
 
 function show_nav_item($link, $label){
-    echo '<li> <a href="\educom-webshop-database/index.php?page='. $link .'">' . $label . '</a></li>';
+    echo '<li> <a href="index.php?page='. $link .'">' . $label . '</a></li>';
 }
 
 function show_nav_bar($data){
@@ -60,7 +60,7 @@ function show_body_end(){
 /* show form functions*/
 function show_form_start($div_class, $form_class, $data, $extra_option=""){
     echo '<div class="'.$div_class.'">
-    <form class="'.$form_class.'" method="post" action="\educom-webshop-database/index.php"
+    <form class="'.$form_class.'" method="post" action="index.php"
     '.$extra_option.'>
     <span class="error">'; echo get_variable($data,"errors","generic"); echo '</span><br>';
 }
@@ -107,7 +107,7 @@ function show_form_field($field_name, $label, $type, $data, $error_name, $option
 function cart_button($id, $place, $action, $data) {
 
     echo '<div class="cart_button">
-    <form action="\educom-webshop-database/index.php" method="post">
+    <form action="index.php" method="post">
     <input type="hidden" name="page" value="webshop" />
     <input type="hidden" name="id_in_cart" value="'.$id.'" />
     <input type="hidden" name="place" value="'.$place.'" />

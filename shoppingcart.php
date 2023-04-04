@@ -3,7 +3,7 @@
 function show_order_button() {
 
     echo '<div class="order_button">
-    <form action="\educom-webshop-database/index.php" method="post">
+    <form action="index.php" method="post">
     <input type="hidden" name="page" value="shoppingcart" />
     <input type="submit" value="Afrekenen">
     </form>
@@ -41,7 +41,7 @@ function show_products($data){
     $products = $data['products'];
     foreach( $products as $product){
         echo '<div class="shoppingcart_item">
-        <a href="\educom-webshop-database/index.php?page=webshop&id='.$product->get_id().'">'
+        <a href="index.php?page=webshop&id='.$product->get_id().'">'
         .$product->get_name() .'</a>
         <span class="cart_price">'.$product->get_price().'</span>
         </div>
