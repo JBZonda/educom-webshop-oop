@@ -44,9 +44,7 @@ function add_to_cart($product_id, $amount){
 }
 
 function remove_from_cart($product_id){
-    if (($key = array_search($product_id, $_SESSION["cart"])) !== false) {
-        unset($_SESSION["cart"][$key]);
-    }
+    unset($_SESSION["cart"][$product_id]);
 }
 
 function get_cart(){

@@ -124,6 +124,7 @@ function cart_button($id, $place, $action, $data) {
             $submit_value = "Add to cart";
             break;
         case 'remove':
+            echo '<input type="hidden" name="amount" value="1" />';
             $submit_value = "Remove from cart";
             break;
     } 
@@ -162,6 +163,32 @@ function show_body_section($data){
 }
 
 function showResponsePage($data){
+    switch ($data["page"]){
+        case "home":
+            break;
+        case "about":
+            break;
+        case "contact":
+            break;
+        case "register":
+            break;
+        case "login":
+            break;
+        case "logout":
+            break;
+        case "change_password":
+            break;
+        case "webshop":
+            break;
+        case "shoppingcart":
+            break;
+        case "top5":
+            break;
+
+        case "upload":
+            
+            break;
+    }
     show_HTML_start();
     show_head_section();
     show_body_section($data);

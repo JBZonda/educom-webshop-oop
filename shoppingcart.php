@@ -37,7 +37,6 @@ function show_content($data) {
 }
 
 function show_products($data){
-    var_dump(get_cart());
     $products = $data['products'];
     foreach( $products as $product){
         echo '<div class="shoppingcart_item">

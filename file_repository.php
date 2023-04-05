@@ -146,12 +146,7 @@ function get_products_top5(){
     return get_products($sql);
 }
 
-function save_order($data){
-    $user_id = $data["user_id"];
-    $time = $data["time"];
-    $product_ids = $data["ordered_product_ids"];
-
-
+function save_order($user_id,$time,$product_ids,$amounts){
     try {
 
         $conn = connect_database();
@@ -171,7 +166,7 @@ function save_order($data){
             if (substr($sql,-7) != "VALUES "){
                 $sql = $sql . " , ";
             }
-            $sql = $sql . "('" . $product_id  ."','" . $last_id . "','" . $data["order"][$product_id] . "')";
+            $sql = $sql . "('" . $product_id  ."','" . $last_id . "','" . $amounts[$product_id] . "')";
         }
         echo $sql;
 

@@ -180,7 +180,7 @@ function process_Request($page){
                 
                 $data["time"] = date("Y-m-d");
                 $data["user_id"] = get_user_id();
-                save_order($data);
+                save_order($data["user_id"],$data["time"],$data["ordered_product_ids"], $data["order"]);
                 $data["page"] = "home";
             } else {
                 $order = get_cart();

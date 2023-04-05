@@ -15,7 +15,7 @@ function show_product_in_overview($product, $data){
     <img src="Images/'. $product->get_image_location().'" alt="image of '. $product->get_id() .'">
     <p>Prijs:'. $product->get_price().'</p>';
     if (isUserLoggedIn()){
-        if (in_array($product->get_id(), get_cart())){
+        if (array_key_exists($product->get_id(), get_cart())){
             cart_button($product->get_id(), "overview", "remove", $data);
         } else {
             cart_button($product->get_id(), "overview", "add", $data);

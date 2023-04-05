@@ -71,6 +71,7 @@ abstract class FormsDoc extends BasicDoc {
                 $submit_value = "Add to cart";
                 break;
             case 'remove':
+                echo '<input type="hidden" name="amount" value="1" />';
                 $submit_value = "Remove from cart";
                 break;
         } 
