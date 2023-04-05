@@ -163,18 +163,34 @@ function show_body_section($data){
 }
 
 function showResponsePage($data){
+    include "views/HtmlDoc.php";
+    include "views/BasicDoc.php";
+    include "views/FormsDoc.php";
     switch ($data["page"]){
         case "home":
+            include "views/HomeDoc.php";
+            $view = new HomeDoc($data);
+            $view->show();
             break;
         case "about":
+            include "views/AboutDoc.php";
+            $view = new AboutDoc($data);
+            $view->show();
             break;
         case "contact":
+            include "views/ContactDoc.php";
+            $view = new ContactDoc($data);
+            $view->show();
             break;
         case "register":
+            include "views/RegisterDoc.php";
+            $view = new RegisterDoc($data);
+            $view->show();
             break;
         case "login":
-            break;
-        case "logout":
+            include "views/LoginDoc.php";
+            $view = new LoginDoc($data);
+            $view->show();
             break;
         case "change_password":
             break;
@@ -189,9 +205,10 @@ function showResponsePage($data){
             
             break;
     }
+    /*
     show_HTML_start();
     show_head_section();
     show_body_section($data);
-    show_HTML_end();
+    show_HTML_end();*/
 }
 ?>

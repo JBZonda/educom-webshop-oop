@@ -3,7 +3,7 @@ include "html_build_functions.php";
 include "validate_form_functions.php";
 include "file_repository.php";
 include "session_functions.php";
-include "classes.php";
+include "Product.php";
 session_start();
 #create session variables on first load
 session_initialize();
@@ -64,8 +64,36 @@ function upload_product_image(){
     } else {
         return false;
     }
-    
+}
 
+function handle_cart_action($data){
+    switch ($data["action"]){
+        case "add":
+            add_to_cart($data["id_in_cart"], $data["amount"]);
+            break;
+        case "remove":
+            remove_from_cart($data["id_in_cart"]);	
+            break;
+    }
+}
+
+function get_page_data($data){
+    switch ($data["place"]){
+        case "detail":
+            $data["page"] = "shoppingcart";
+            $product_ids = get_product_id_from_cart();
+            if ($product_ids != NULL) {
+                $data['products'] = get_products_by_id($product_ids);
+                $data['total_price'] = get_total_price($data['products']);
+            }
+            break;
+        case "overview":
+            $data["id"] = NULL;
+            $product_ids = array(1,2,3,4,5);
+            $data['products'] = get_products_by_id($product_ids);
+            break;
+    return $data;
+    }
 }
 
 function make_menu($data) {
@@ -135,30 +163,11 @@ function process_Request($page){
             if (is_POST()){
                 $data = validate_cart($data);
                 if (is_valid($data)) {
-                    switch ($data["action"]){
-                        case "add":
-                            add_to_cart($data["id_in_cart"], $data["amount"]);
-                            break;
-                        case "remove":
-                            remove_from_cart($data["id_in_cart"]);	
-                            break;
-                    }
 
-                    switch ($data["place"]){
-                        case "detail":
-                            $data["page"] = "shoppingcart";
-                            $product_ids = get_product_id_from_cart();
-                            if ($product_ids != NULL) {
-                                $data['products'] = get_products_by_id($product_ids);
-                                $data['total_price'] = get_total_price($data['products']);
-                            }
-                            break;
-                        case "overview":
-                            $data["id"] = NULL;
-                            $product_ids = array(1,2,3,4,5);
-                            $data['products'] = get_products_by_id($product_ids);
-                            break;
-                    }
+                    handle_cart_action($data);
+                    // get the data to load the page
+                    $data = get_page_data($data);
+                    
                                               
                 }               
             } else if (array_key_exists("id", $_GET)) {
