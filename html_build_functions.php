@@ -7,6 +7,7 @@ function show_HTML_start(){
 function show_HTML_end(){
     echo "</html>";
 }
+
 function show_head_section(){
     echo '<head>
     <title>Home</title>
@@ -29,9 +30,6 @@ function show_nav_bar($data){
     foreach($data['menu'] as $link => $label) {
         show_nav_item($link, $label);
     }
-    
-    
-    #show a register and login or a loguit option depending on if the user is loged in
     
     echo '</ul>
     </div>';
