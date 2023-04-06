@@ -2,9 +2,9 @@
 
 abstract class BasicDoc extends HtmlDoc {
 
-    protected $data;
-    public function __construct($data) {
-        $this->data = $data;
+    protected $model;
+    public function __construct($model) {
+        $this->model = $model;
     }
 
     protected function show_head_section(){
@@ -29,7 +29,7 @@ abstract class BasicDoc extends HtmlDoc {
     protected function show_nav_bar(){
         echo '<div id="nav_bar">
         <ul>';
-        foreach($this->data['menu'] as $link => $label) {
+        foreach($this->model->menu as $link => $label) {
             $this->show_nav_item($link, $label);
         }
         
