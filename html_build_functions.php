@@ -166,6 +166,7 @@ function showResponsePage($data){
     include "views/HtmlDoc.php";
     include "views/BasicDoc.php";
     include "views/FormsDoc.php";
+    include "views/ProductDoc.php";
     switch ($data["page"]){
         case "home":
             include "views/HomeDoc.php";
@@ -195,14 +196,30 @@ function showResponsePage($data){
         case "change_password":
             break;
         case "webshop":
+            include "views/WebshopDoc.php";
+            $view = new WebshopDoc($data);
+            $view->show();
+            break;
+        case "detail":
+            include "views/DetailDoc.php";
+            $view = new DetailDoc($data);
+            $view->show();
             break;
         case "shoppingcart":
+            include "views/ShoppingcartDoc.php";
+            $view = new ShoppingcartDoc($data);
+            $view->show();
             break;
         case "top5":
+            include "views/Top5Doc.php";
+            $view = new Top5Doc($data);
+            $view->show();
             break;
 
         case "upload":
-            
+            include "views/UploadDoc.php";
+            $view = new UploadDoc($data);
+            $view->show();
             break;
     }
     /*

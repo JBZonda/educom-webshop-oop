@@ -34,7 +34,7 @@ function logout_user(){
     
 }
 
-function isUserLoggedIn(){
+function is_user_loggedIn(){
     return ($_SESSION["user_name"] != NULL);
 }
 

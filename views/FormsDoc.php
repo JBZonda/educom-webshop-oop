@@ -2,14 +2,14 @@
 
 abstract class FormsDoc extends BasicDoc {
 
-    function show_form_start($div_class, $form_class, $data, $extra_option=""){
+    protected function show_form_start($div_class, $form_class, $data, $extra_option=""){
         echo '<div class="'.$div_class.'">
         <form class="'.$form_class.'" method="post" action="index.php"
         '.$extra_option.'>
         <span class="error">'; echo $this->get_variable($data,"errors","generic"); echo '</span><br>';
     }
 
-    function show_form_field($field_name, $label, $type, $data, $error_name, $options=NULL){
+    protected function show_form_field($field_name, $label, $type, $data, $error_name, $options=NULL){
             
         echo '<label>'.$label.'</label>';
         switch($type){
@@ -49,11 +49,11 @@ abstract class FormsDoc extends BasicDoc {
         }
     }
     
-    function cart_button($id, $place, $action, $data) {
+    protected function cart_button($id, $place, $action, $data) {
     
         echo '<div class="cart_button">
         <form action="index.php" method="post">
-        <input type="hidden" name="page" value="webshop" />
+        <input type="hidden" name="page" value="'.$data["page"].'" />
         <input type="hidden" name="id_in_cart" value="'.$id.'" />
         <input type="hidden" name="place" value="'.$place.'" />
         <input type="hidden" name="action" value="'. $action .'" />';

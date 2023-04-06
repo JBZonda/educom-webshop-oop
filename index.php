@@ -19,10 +19,10 @@ function getRequestedPage(){
     return $_GET["page"];
 }
 
-function get_total_price($products){
+function get_total_price($products, $cart){
     $total_price = 0;
     foreach ($products as $product){
-        $total_price += $product->get_price();
+        $total_price += $product->get_price() * $cart[$product->get_id()];
     }
     return $total_price;
 }
@@ -84,7 +84,7 @@ function get_page_data($data){
             $product_ids = get_product_id_from_cart();
             if ($product_ids != NULL) {
                 $data['products'] = get_products_by_id($product_ids);
-                $data['total_price'] = get_total_price($data['products']);
+                $data['total_price'] = get_total_price($data['products'], get_cart());
             }
             break;
         case "overview":
@@ -92,14 +92,15 @@ function get_page_data($data){
             $product_ids = array(1,2,3,4,5);
             $data['products'] = get_products_by_id($product_ids);
             break;
-    return $data;
     }
+    return $data;
+    
 }
 
 function make_menu($data) {
     $menu = array("home" => "Home", "about" => "About",
     "contact" => "Contact", "webshop" => "Webshop", "top5" => "Top 5");
-    if (isUserLoggedIn()){
+    if ($data["loggedin"]){
         $menu["logout"] = "Loguit " . get_current_user_name();
         $menu["change_password"] = "Wachtwoord veranderen";
         $menu["shoppingcart"] = "Winkelwagen";
@@ -114,7 +115,7 @@ function make_menu($data) {
 
 function process_Request($page){
     $page = htmlspecialchars($page);
-    $data = array("page"=>$page,"errors"=>array());
+    $data = array("page"=>$page,"errors"=>array(), "loggedin"=>is_user_loggedin());
     switch ($page){
         case "home":
             break;
@@ -163,25 +164,31 @@ function process_Request($page){
             if (is_POST()){
                 $data = validate_cart($data);
                 if (is_valid($data)) {
-
                     handle_cart_action($data);
                     // get the data to load the page
                     $data = get_page_data($data);
-                    
-                                              
+                
                 }               
-            } else if (array_key_exists("id", $_GET)) {
-                $data["id"] =  $_GET["id"];
-                $product_ids = array($data["id"]);
-                $data['products'] = get_products_by_id($product_ids);
             } else {
                 $data["id"] = NULL;
                 $product_ids = array(1,2,3,4,5);
                 $data['products'] = get_products_by_id($product_ids);
+            }        
+            break;
+        case "detail":
+            if (is_POST()){
+                $data = validate_cart($data);
+                if (is_valid($data)) {
+                    handle_cart_action($data);
+                    // get the data to load the page
+                    $data = get_page_data($data);
+                                              
+                }
+            } else {
+                $data["id"] =  $_GET["id"];
+                $product_ids = array($data["id"]);
+                $data['products'] = get_products_by_id($product_ids);
             }
-            
-                
-            
             break;
         case "shoppingcart":
             if (is_POST()){
@@ -195,11 +202,11 @@ function process_Request($page){
                 $data["page"] = "home";
             } else {
                 $order = get_cart();
-                $product_ids = array_keys(get_cart());
+                $product_ids = array_keys($order);
                 if ($product_ids != NULL) {
                     $data["order"] = $order;
                     $data['products'] = get_products_by_id($product_ids);
-                    $data['total_price'] = get_total_price($data['products']);
+                    $data['total_price'] = get_total_price($data['products'], $data["order"]);
                 }
             }
             break;
@@ -228,7 +235,8 @@ function process_Request($page){
             $data["page"] = "home";
             break;
     }
-
+    $data["cart"] = get_cart();
+    $data["loggedin"] = is_user_loggedin();
     $data = make_menu($data);
     return $data;
 }

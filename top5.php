@@ -14,7 +14,7 @@ function show_product_in_overview($product, $data){
     <img src="Images/'. $product->get_image_location().'" alt="image of '. $product->get_id() .'">
     <p >'. $product->get_name() . '</p>
     <p>Prijs:'. $product->get_price().'</p>';
-    if (isUserLoggedIn()){
+    if ($data["loggedin"]){
         if (in_array($product->get_id(), get_cart())){
             cart_button($product->get_id(), "overview", "remove", $data);
         } else {
