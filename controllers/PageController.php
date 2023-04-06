@@ -1,5 +1,5 @@
 <?php
-require_once "models/PageModel.php";
+include "models/PageModel.php";
 
 class PageController{
     public $model;
@@ -18,6 +18,10 @@ class PageController{
             case "home":
                 break;
             case "about":
+                break;
+            case "contact":
+                include "models/UserModel.php";
+                $this->model = new UserModel($this->model);
                 break;
         }
         $this->model->make_menu();
