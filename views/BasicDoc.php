@@ -45,12 +45,8 @@ abstract class BasicDoc extends HtmlDoc {
 
     abstract public function show_content();
     
-    protected function get_variable($data, $key, $key_array_in_array=NULL){
-        if ($key_array_in_array != NULL){
-            $value = isset($data[$key][$key_array_in_array]) ? $data[$key][$key_array_in_array] : "";
-        } else {
-            $value = isset($data[$key]) ? $data[$key] : "";
-        }
+    protected function get_variable($array, $key){
+        $value = isset($array[$key]) ? $array[$key] : "";
         return $value;
     }
 

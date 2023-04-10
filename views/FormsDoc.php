@@ -2,50 +2,49 @@
 
 abstract class FormsDoc extends BasicDoc {
 
-    protected function show_form_start($div_class, $form_class, $data, $extra_option=""){
+    protected function show_form_start($div_class, $form_class, $extra_option=""){
         echo '<div class="'.$div_class.'">
         <form class="'.$form_class.'" method="post" action="index.php"
         '.$extra_option.'>
-        <span class="error">'; echo $this->get_variable($data,"errors","generic"); echo '</span><br>';
+        <span class="error">'; echo $this->get_variable($this->model->errors,"generic"); echo '</span><br>';
     }
 
-    protected function show_form_field($field_name, $label, $type, $data, $error_name, $options=NULL){
+    protected function show_form_field($field_name, $label, $type, $error_name, $options=NULL){
             
         echo '<label>'.$label.'</label>';
         switch($type){
             case "textarea":
                 echo
-                '<br><textarea id="'.$field_name.'" name="'.$field_name.'">'; echo $this->get_variable($data,$field_name); echo '</textarea>
-                <span class="error">'; echo $this->get_variable($data,"errors", $error_name); echo '</span><br>';
+                '<br><textarea id="'.$field_name.'" name="'.$field_name.'">'; echo $this->get_variable($this->model->values,$field_name); echo '</textarea>
+                <span class="error">'; echo $this->get_variable($this->model->errors, $error_name); echo '</span><br>';
                 break;
             case "radio":
-                echo '<br><span class="error">'; echo $this->get_variable($data,"errors",  $error_name); 
+                echo '<br><span class="error">'; echo $this->get_variable($this->model->errors,  $error_name); 
                 
                 echo '</span><br>';
                 foreach ($options as $option) {
                     echo '<input type="radio" name="'.$field_name.'" value="'.$option.'"';
-                    if ($this->get_variable($data, "com_pref") == $option) {
+                    if ($this->get_variable($this->model->values, $field_name) == $option) {
                         echo 'checked="checked"';
                     }
                     echo '><label for="">'.$option.'</label><br>';
                 }
                 break;
             case "select":
-                echo '<span class="error">'; echo $this->get_variable($data,"errors",$error_name); echo'</span><br><br>
+                echo '<span class="error">'; echo $this->get_variable($this->model->errors,$error_name); echo'</span><br><br>
                 <select id="'.$field_name.'" name="'.$field_name.'">';
                 
                 foreach ($options as $option) {
                     echo '<option value="'.$option.'"';
-    
-                    if ($this->get_variable($data,"address") == "'.$option.'"){
+                    if ($this->get_variable($this->model->values,$field_name) == $option){
                         echo ' selected="selected"';}
                     echo'>'.$option.'</option>';
                 }
                 echo '</select><br><br>';
                 break;
             default:
-                echo '<br><input type="'.$type.'" name="'.$field_name.'" value="'; echo $this->get_variable($data,$field_name); echo '">
-                <span class="error">'; echo $this->get_variable($data,"errors",$error_name); echo'</span><br><br>';
+                echo '<br><input type="'.$type.'" name="'.$field_name.'" value="'; echo $this->get_variable($this->model->values,$field_name); echo '">
+                <span class="error">'; echo $this->get_variable($this->model->errors,$error_name); echo'</span><br><br>';
         }
     }
     

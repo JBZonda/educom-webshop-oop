@@ -5,10 +5,12 @@ class PageModel{
     public $menu;
     public $logged_in;
     public $errors;
+    public $values;
     function __construct(){
         $this->is_POST = $this->is_POST();
         $this->page = $this->get_requested_page();
         $this->errors = array();
+        $this->values = array();
 
     }
 
