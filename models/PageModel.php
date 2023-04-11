@@ -6,12 +6,22 @@ class PageModel{
     public $logged_in;
     public $errors;
     public $values;
+    public $session_handler;
+
     function __construct(){
+        $this->session_handler = new SessionFunctions();
+        $this->session_handler->session_initialize();
         $this->is_POST = $this->is_POST();
         $this->page = $this->get_requested_page();
+        $this->logged_in = $this->session_handler->is_user_logged_in();
         $this->errors = array();
         $this->values = array();
+        
 
+    }
+
+    function set_page($page){
+        $this->page = $page;
     }
 
     function get_requested_page(){
@@ -31,7 +41,7 @@ class PageModel{
         $this->menu = array("home" => "Home", "about" => "About",
         "contact" => "Contact", "webshop" => "Webshop", "top5" => "Top 5");
         if ($this->logged_in){
-            $this->menu["logout"] = "Loguit " . get_current_user_name();
+            $this->menu["logout"] = "Loguit " . $this->session_handler->get_current_user_name();
             $this->menu["change_password"] = "Wachtwoord veranderen";
             $this->menu["shoppingcart"] = "Winkelwagen";
         } else {

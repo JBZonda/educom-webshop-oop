@@ -86,9 +86,8 @@ function validate_form_login($data){
         } catch(Exception $e){
             $data["errors"]["generic"] = "Er is een fout probeer het later nog eens.";
         }
-        }
+    }
     return $data;
-    
 }
 
 

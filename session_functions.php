@@ -8,12 +8,11 @@ function session_initialize(){
         $_SESSION["cart"] = array();
     }
 }
-function login_user($data){
-    $_SESSION["user_id"] = $data["id"];
-    $_SESSION["user_email"] = $data["email"];
-    $_SESSION["user_name"] = $data["name"];
+function login_user($id,$email,$name){
+    $_SESSION["user_id"] = $id;
+    $_SESSION["user_email"] = $email;
+    $_SESSION["user_name"] = $name;
     $_SESSION["cart"] = array();
-    
 }
 
 function get_user_id(){
@@ -34,7 +33,7 @@ function logout_user(){
     
 }
 
-function is_user_loggedIn(){
+function is_user_logged_in(){
     return ($_SESSION["user_name"] != NULL);
 }
 

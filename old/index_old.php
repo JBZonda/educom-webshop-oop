@@ -149,7 +149,7 @@ function process_Request($page){
         case "logout":
             logout_user($data);
             $data["page"] = "home";
-    return $data;
+
             break;
         case "change_password":
             if (is_POST()){

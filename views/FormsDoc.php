@@ -48,11 +48,11 @@ abstract class FormsDoc extends BasicDoc {
         }
     }
     
-    protected function cart_button($id, $place, $action, $data) {
+    protected function cart_button($id, $place, $action) {
     
         echo '<div class="cart_button">
         <form action="index.php" method="post">
-        <input type="hidden" name="page" value="'.$data["page"].'" />
+        <input type="hidden" name="page" value="'. $this->model->page .'" />
         <input type="hidden" name="id_in_cart" value="'.$id.'" />
         <input type="hidden" name="place" value="'.$place.'" />
         <input type="hidden" name="action" value="'. $action .'" />';
@@ -64,7 +64,7 @@ abstract class FormsDoc extends BasicDoc {
                         echo '<input type="hidden" name="amount" value="1" />';
                         break;
                     default:
-                        $this->show_form_field("amount","Amount:","select", $data, "amount", array(1,2,3,4,5,6,7,8,9));
+                        $this->show_form_field("amount","Amount:","select", "amount", array(1,2,3,4,5,6,7,8,9));
     
                 }
                 $submit_value = "Add to cart";
