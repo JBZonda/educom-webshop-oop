@@ -56,17 +56,19 @@ class PageController{
                 $this->model->set_page("home");
 
             case "change_password":
+                include "models/UserModel.php";
+                $this->model = new UserModel($this->model);
                 if ($this->model->is_POST){
                     $this->validate_form_change_password();
                     if ($this->model->is_valid()) {
-                        set_new_password($data["email"], $data["password"]);
+                        set_new_password($this->model->values["email"], $this->model->values["password"]);
                     }
                 }
                 break;
                 break;
             case "webshop":
-                include "models/UserModel.php";
-                $this->model = new UserModel($this->model);
+                include "models/ShopModel.php";
+                $this->model = new ShopModel($this->model);
                 if ($this->model->is_POST){
                     $this->validate_cart();
                     if ($this->model->is_valid()) {
@@ -80,8 +82,8 @@ class PageController{
                 
                 break;
             case "detail":
-                include "models/UserModel.php";
-                $this->model = new UserModel($this->model);
+                include "models/ShopModel.php";
+                $this->model = new ShopModel($this->model);
                 if ($this->model->is_POST){
                     $this->validate_cart();
                     if ($this->model->is_valid()) {
@@ -100,8 +102,8 @@ class PageController{
                 }
                 break;
             case "shoppingcart":
-                include "models/UserModel.php";
-                $this->model = new UserModel($this->model);
+                include "models/ShopModel.php";
+                $this->model = new ShopModel($this->model);
                 if ($this->model->is_POST){
                     $this->model->values["order"] = $this->model->session_handler->get_cart();
                     $this->model->values["ordered_product_ids"] = get_product_id_from_cart();
@@ -122,8 +124,8 @@ class PageController{
                 }
                 break;
             case "top5":
-                include "models/UserModel.php";
-                $this->model = new UserModel($this->model);
+                include "models/ShopModel.php";
+                $this->model = new ShopModel($this->model);
                 if ($this->model->is_POST){
                     $this->validate_cart();
                     if ($this->model->is_valid()) {
@@ -134,8 +136,8 @@ class PageController{
                 break;
 
             case "upload":
-                include "models/UserModel.php";
-                $this->model = new UserModel($this->model);
+                include "models/ShopModel.php";
+                $this->model = new ShopModel($this->model);;
 
                 if ($this->model->is_POST){
                     $this->validate_upload();
