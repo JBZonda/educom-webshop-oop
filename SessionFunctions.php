@@ -30,7 +30,7 @@ class SessionFunctions {
     
     function logout_user(){
         session_unset();
-        session_initialize();
+        $this->session_initialize();
         
     }
     

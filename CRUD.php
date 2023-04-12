@@ -1,6 +1,6 @@
 <?php
 
-class GeneralCRUD{
+class CRUD{
     public $servername = "localhost";
     public $username = "jeroens_webshop_user";
     public $password = "p@TL!Cz7m2qes7V!";
@@ -34,8 +34,9 @@ class GeneralCRUD{
         try{
             $conn = $this->connect();
             $stmt = $conn->prepare($sql);
+            $stmt -> setFetchMode(PDO::FETCH_OBJ);
             $stmt->execute();
-
+            $row = $stmt->fetch();
             #read it
             
         } catch(PDOException $e){
@@ -43,7 +44,7 @@ class GeneralCRUD{
         } finally {
             $conn = null;
         }
-        # return obj or class 
+         return $row;
 
     }
 
@@ -51,16 +52,19 @@ class GeneralCRUD{
         try{
             $conn = $this->connect();
             $stmt = $conn->prepare($sql);
+            $stmt -> setFetchMode(PDO::FETCH_OBJ);
             $stmt->execute();
 
-            #read it
+            $results = $stmt->fetchAll();
+            
             
         } catch(PDOException $e){
             echo "Error: " . $e->getMessage();
         } finally {
             $conn = null;
         }
-        # return obj or class 
+
+        return $results;
     }
 
     function deleteRow($sql){

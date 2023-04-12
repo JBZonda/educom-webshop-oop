@@ -1,6 +1,6 @@
 <?php
 
-include "GeneralCRUD.php";
+include "CRUD.php";
 
 $table = "users";
 $columns = array("name", "email", "password");
@@ -8,9 +8,15 @@ $columns = array("name", "email", "password");
 
 $values = array(":name"=>"jaap", ":email"=>"jaap.@here.nl", ":password"=>"asdfgbvcdrtgbvcxdfghbvfgfghgfvhhbghjbghjhghhygcfg");
 
-$sql = "DELETE FROM users WHERE `users`.`id` = 5";
+$sql = "SELECT * FROM users WHERE id=2";
 
-$crud = new GeneralCRUD();
-#$crud->createRow($sql, $values);
-$crud->deleteRow($sql);
+$crud = new CRUD();
+#$id = $crud->createRow($sql, $values);
+#$crud->deleteRow($sql);
+#$sql = "SELECT * FROM users WHERE id=2";
+#$row = $crud->readOneRow($sql);
+#var_dump($row);
+#$sql = "SELECT * FROM users";
+#$results = $crud->readMultipleRows($sql);
+#var_dump($results[0]->id);
 ?>
