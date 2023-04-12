@@ -48,8 +48,7 @@ function does_email_exist($email){
         
     } finally {
         disconnect_database($conn);
-    }
-    
+    } 
 }
 
 function get_user_data_from_email($email){
@@ -66,8 +65,8 @@ function get_user_data_from_email($email){
     } finally {
         disconnect_database($conn);
     }
-    
 }
+
 function set_new_password($email, $new_password){
     $conn = connect_database();
     $email = mysqli_real_escape_string($conn, $email);
