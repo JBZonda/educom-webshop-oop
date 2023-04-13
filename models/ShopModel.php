@@ -1,11 +1,11 @@
 <?php
-include "models/FormModel.php";
+include_once "models/FormModel.php";
 class ShopModel extends FormModel{
 
     function get_total_price($products, $cart){
         $total_price = 0;
         foreach ($products as $product){
-            $total_price += $product->get_price() * $cart[$product->get_id()];
+            $total_price += $product->price * $cart[$product->id];
         }
         return $total_price;
     }
@@ -32,12 +32,8 @@ class ShopModel extends FormModel{
         // Check if image file is a actual image or fake image
         $check = getimagesize($_FILES["image"]["tmp_name"]);
         
-        if($check !== false) {
-            echo "File is an image - " . $check["mime"] . ".";
-            
-        } else {
-            throw new Exception ("File is not a valid image");
-            
+        if($check === false) {
+            throw new Exception ("File is not a valid image");    
         }
         // Check if file already exists
         if (file_exists($target_file)) {

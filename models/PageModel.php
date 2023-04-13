@@ -7,8 +7,10 @@ class PageModel{
     public $errors;
     public $values;
     public $session_handler;
+    public $crud;
 
-    function __construct(){
+    function __construct($crud){
+        $this->crud = $crud;
         $this->session_handler = new SessionFunctions();
         $this->session_handler->session_initialize();
         $this->is_POST = $this->is_POST();

@@ -1,15 +1,7 @@
 <?php
+include_once "models/PageModel.php";
 class FormModel extends PageModel{
     public $products;
-
-    public function __construct($parent){
-        $this->session_handler = new SessionFunctions();
-        $this->is_POST = $parent->is_POST;
-        $this->page = $parent->page;
-        $this->menu = $parent->menu;
-        $this->logged_in = $parent->logged_in;
-        $this->errors = $parent->errors;
-    }
     
     /*-------------general validate functions-------------------*/
 

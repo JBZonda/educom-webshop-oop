@@ -3,8 +3,10 @@ include "models/PageModel.php";
 
 class PageController{
     public $model;
-    function __construct(){
-        $this->model = new PageModel();
+    public $model_factory;
+    function __construct($model_factory){
+        $this->model_factory = $model_factory;
+        $this->model = $this->model_factory->createModel("page");
     }
 
     function handle_request(){
@@ -19,28 +21,25 @@ class PageController{
             case "about":
                 break;
             case "contact":
-                include "models/UserModel.php";
-                $this->model = new UserModel($this->model);
+                $this->model = $this->model_factory->createModel("user");
                 if ($this->model->is_POST){
                     $this->validate_form_contact();
-                    $this->model->values["thanks"] = $this->model->is_valid();;
+                    $this->model->values["thanks"] = $this->model->is_valid();
                 }
 
                 break;
             case "register":
-                include "models/UserModel.php";
-                $this->model = new UserModel($this->model);
+                $this->model = $this->model_factory->createModel("user");
                 if ($this->model->is_POST){
                     $this->validate_form_register();
                     if ($this->model->is_valid()){
-                        save_user($this->model->values["email"],$this->model->values["name"],$this->model->values["password"]);
+                        $this->model->crud->create_user($this->model->values["email"],$this->model->values["name"],$this->model->values["password"]);
                         $this->model->set_page("login");
                     }
                 }
                 break;
             case "login":
-                include "models/UserModel.php";
-                $this->model = new UserModel($this->model);
+                $this->model = $this->model_factory->createModel("user");
                 if ($this->model->is_POST){
                     $this->validate_form_login();
                     if ($this->model->is_valid()){
@@ -56,19 +55,19 @@ class PageController{
                 $this->model->set_page("home");
 
             case "change_password":
-                include "models/UserModel.php";
-                $this->model = new UserModel($this->model);
+                $this->model = $this->model_factory->createModel("user");
                 if ($this->model->is_POST){
                     $this->validate_form_change_password();
                     if ($this->model->is_valid()) {
-                        set_new_password($this->model->values["email"], $this->model->values["password"]);
+                        $this->model->crud->update_password($this->model->values["email"], $this->model->values["password"]);
+                        $this->model->set_page("home");
                     }
+                    
                 }
                 break;
-                break;
+
             case "webshop":
-                include "models/ShopModel.php";
-                $this->model = new ShopModel($this->model);
+                $this->model = $this->model_factory->createModel("shop");
                 if ($this->model->is_POST){
                     $this->validate_cart();
                     if ($this->model->is_valid()) {
@@ -76,56 +75,51 @@ class PageController{
                     }               
                 } 
                 $this->model->values["id"] = NULL;
-
-                $product_ids = array(1,2,3,4,5);
-                $this->model->products = get_products_by_id($product_ids);
-                
+                $this->model->products = $this->model->crud->read_all_products();
                 break;
+
             case "detail":
-                include "models/ShopModel.php";
-                $this->model = new ShopModel($this->model);
+                $this->model = $this->model_factory->createModel("shop");
                 if ($this->model->is_POST){
                     $this->validate_cart();
                     if ($this->model->is_valid()) {
                         $this->model->handle_cart_action();
                         $this->model->set_page("shoppingcart");
-                        $product_ids = get_product_id_from_cart();
+                        $product_ids = $this->model->session_handler->get_product_id_from_cart();
                         if ($product_ids != NULL) {
-                            $this->model->products = get_products_by_id($product_ids);
+                            $this->model->products = $this->model->crud->read_products_by_id($product_ids);
                             $this->model->values['total_price'] = $this->model->get_total_price($this->model->products, get_cart());
                         }
                     }               
                 } else {
                     $this->model->values["id"] =  $_GET["id"];
                     $product_ids = array($this->model->values["id"]);
-                    $this->model->products = get_products_by_id($product_ids);
+                    $this->model->products = $this->model->crud->read_products_by_id($product_ids);
                 }
                 break;
             case "shoppingcart":
-                include "models/ShopModel.php";
-                $this->model = new ShopModel($this->model);
+                $this->model = $this->model_factory->createModel("shop");
                 if ($this->model->is_POST){
                     $this->model->values["order"] = $this->model->session_handler->get_cart();
-                    $this->model->values["ordered_product_ids"] = get_product_id_from_cart();
-                    empty_cart();
+                    $this->model->values["ordered_product_ids"] =  $this->model->session_handler->get_product_id_from_cart();
+                    $this->model->session_handler->empty_cart();
                     
                     $this->model->values["time"] = date("Y-m-d");
                     $this->model->values["user_id"] = $this->model->session_handler->get_user_id();
-                    save_order($this->model->values["user_id"],$this->model->values["time"],$this->model->values["ordered_product_ids"], $this->model->values["order"]);
+                    $this->model->crud->create_order($this->model->values["user_id"],$this->model->values["time"],$this->model->values["ordered_product_ids"], $this->model->values["order"]);
                     $this->model->set_page("home");
                 } else {
-                    $order = get_cart();
+                    $order = $this->model->session_handler->get_cart();
                     $product_ids = array_keys($order);
                     if ($product_ids != NULL) {
                         $this->model->values["order"] = $order;
-                        $this->model->products = get_products_by_id($product_ids);
+                        $this->model->products = $this->model->crud->read_products_by_id($product_ids);
                         $this->model->values['total_price'] = $this->model->get_total_price($this->model->products, $this->model->values["order"]);
                     }
                 }
                 break;
             case "top5":
-                include "models/ShopModel.php";
-                $this->model = new ShopModel($this->model);
+                $this->model = $this->model_factory->createModel("shop");
                 if ($this->model->is_POST){
                     $this->validate_cart();
                     if ($this->model->is_valid()) {
@@ -136,9 +130,7 @@ class PageController{
                 break;
 
             case "upload":
-                include "models/ShopModel.php";
-                $this->model = new ShopModel($this->model);;
-
+                $this->model = $this->model_factory->createModel("shop");
                 if ($this->model->is_POST){
                     $this->validate_upload();
                     if ($this->model->is_valid()) {
@@ -147,12 +139,9 @@ class PageController{
                         } catch (Exception $e) {
                             $this->model->values["errors"]["password"] = "Error while uploading image: " . $e;
                         }
-                        
-                        $product = new Product(NULL,$this->model->values["title"],$this->model->values["description"],$file_name ,$this->model->values["price"]);
-                        save_product($product);
-    
+
+                        $this->model->crud->create_product($this->model->values["title"],$this->model->values["description"], $this->model->values["price"], $file_name);
                     }
-    
                 }
                 break;
         }
@@ -179,7 +168,7 @@ class PageController{
             $this->model->errors["password"] = "Herhaalde wachtwoord komt niet over een.";
         }
         try {
-            if (does_email_exist($this->model->values["email"])) {
+            if ($this->model->does_email_exist($this->model->values["email"])) {
                 $this->model->errors["email"] = "Email is al in gebruik.";
             }
         } catch(Exception $e){
@@ -195,12 +184,12 @@ class PageController{
         #check the login data
         if ($this->model->is_valid()) {
             try{
-                $user_data = get_user_data_from_email($this->model->values["email"]);
-                if ($user_data == NULL || ($this->model->values["password"] != $user_data["password"])){
+                $user_data = $this->model->crud->read_user_by_email($this->model->values["email"]);
+                if ($user_data == NULL || ($this->model->values["password"] != $user_data->password)){
                     $this->model->errors["login"] = "Login is incorrect.";
                 } else {
-                    $this->model->values["name"] = $user_data["name"];
-                    $this->model->values["id"] = $user_data["id"];
+                    $this->model->values["name"] = $user_data->name;
+                    $this->model->values["id"] = $user_data->id;
                 }
             } catch(Exception $e){
                 $this->model->errors["generic"] = "Er is een fout probeer het later nog eens.";
@@ -212,18 +201,18 @@ class PageController{
     function validate_form_change_password(){
         $fields = array("old_password", "password", "password_re");
         $this->model->validate_input_fields($fields);
-    
         if ($this->model->values["password"] != $this->model->values["password_re"]) {
             $this->model->errors["password"] = "Herhaalde wachtwoord komt niet over een.";
         }
     
         if ($this->model->is_valid()) {
             try{
-            $user_data = $this->model->session_handler->get_current_user_data();
-            if ($user_data["password"] != $this->model->values["old_password"]){
+                $email = $this->model->session_handler->get_current_user_email();
+                $user_data = $this->model->crud->read_user_by_email($email);
+            if ($user_data->password != $this->model->values["old_password"]){
                 $this->model->errors["old_password"] = "Wachtwoord is incorrect.";
             } else {
-                $this->model->values["email"] = $user_data["email"];
+                $this->model->values["email"] = $user_data->email;
             }
             } catch(Exception $e){
                 $this->model->errors["generic"] = "Er is een fout probeer het later nog eens.";

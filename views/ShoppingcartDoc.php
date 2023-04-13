@@ -32,10 +32,10 @@ class ShoppingcartDoc extends FormsDoc{
         $products = $this->model->products;
         foreach( $products as $product){
             echo '<div class="shoppingcart_item">
-            <a href="index.php?page=detail&id='.$product->get_id().'">'
-            .$product->get_name() .'</a>
-            <a>Aantal:'.$this->model->values["cart"][$product->get_id()].'</a>
-            <span class="cart_price">'.$product->get_price().'</span>
+            <a href="index.php?page=detail&id='.$product->id.'">'
+            .$product->name .'</a>
+            <a>Aantal:'.$this->model->values["cart"][$product->id].'</a>
+            <span class="cart_price">'.$product->price.'</span>
             </div>
             <br>'
             ;

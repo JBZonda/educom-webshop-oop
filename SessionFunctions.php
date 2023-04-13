@@ -24,10 +24,10 @@ class SessionFunctions {
         return $_SESSION["user_name"];
     }
     
-    function get_current_user_data() {
-        return get_user_data_from_email($_SESSION["user_email"]);
+    function get_current_user_email() {
+        return $_SESSION["user_email"];
     }
-    
+
     function logout_user(){
         session_unset();
         $this->session_initialize();
