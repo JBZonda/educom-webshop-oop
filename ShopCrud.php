@@ -70,8 +70,6 @@ class ShopCrud{
             $values[":amount" . $product_id] =  $amounts[$product_id];
 
         }
-        echo $sql . "<br>";
-        var_dump($values);echo "<br>";
         $this->crud->createRow($sql, $values);
         
     }

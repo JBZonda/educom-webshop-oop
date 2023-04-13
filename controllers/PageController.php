@@ -88,7 +88,7 @@ class PageController{
                         $product_ids = $this->model->session_handler->get_product_id_from_cart();
                         if ($product_ids != NULL) {
                             $this->model->products = $this->model->crud->read_products_by_id($product_ids);
-                            $this->model->values['total_price'] = $this->model->get_total_price($this->model->products, get_cart());
+                            $this->model->values['total_price'] = $this->model->get_total_price($this->model->products, $this->model->session_handler->get_cart());
                         }
                     }               
                 } else {
