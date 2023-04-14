@@ -41,7 +41,7 @@ class ShopModel extends FormModel{
         }
     
         // Check file size
-        if ($_FILES["fileToUpload"]["size"] > 2000000) {
+        if ($_FILES["image"]["size"] > 2000000) {
             throw new Exception ("File is too large");
         }
     
@@ -51,7 +51,7 @@ class ShopModel extends FormModel{
             throw new Exception ("Invalid image file type");
         }
        
-        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
             return $file_name;
         } else {
             return false;

@@ -141,6 +141,7 @@ class PageController{
                         }
 
                         $this->model->crud->create_product($this->model->values["title"],$this->model->values["description"], $this->model->values["price"], $file_name);
+                        $this->model->set_page("home");
                     }
                 }
                 break;
@@ -229,7 +230,7 @@ class PageController{
 
 /*---------------------upload---------------*/
     function validate_upload(){
-        $fields = array("title", "discription", "price");
+        $fields = array("title", "description", "price");
         $this->model->validate_input_fields($fields);
     }
 

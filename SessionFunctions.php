@@ -2,7 +2,7 @@
 
 class SessionFunctions {
     function session_initialize(){
-        if ($_SESSION == array()){
+        if ($_SESSION == array() or !key_exists("cart",$_SESSION)){
             $_SESSION["user_id"] = NULL;
             $_SESSION["user_name"] = NULL;
             $_SESSION["user_email"] = NULL;
