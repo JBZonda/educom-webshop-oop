@@ -1,7 +1,10 @@
 <?php
 include_once "models/FormModel.php";
 class ShopModel extends FormModel{
-
+    function __construct($crud, $js_files){
+        parent::__construct($crud);
+        $this->js_files = $js_files;
+    }
     function get_total_price($products, $cart){
         $total_price = 0;
         foreach ($products as $product){

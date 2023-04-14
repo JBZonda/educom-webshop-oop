@@ -8,6 +8,7 @@ class PageModel{
     public $values;
     public $session_handler;
     public $crud;
+    public $js_files;
 
     function __construct($crud){
         $this->crud = $crud;

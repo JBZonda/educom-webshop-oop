@@ -7,11 +7,31 @@ abstract class BasicDoc extends HtmlDoc {
         $this->model = $model;
     }
 
+
+    protected function show_js_files(){
+        $files = $this->model->js_files;
+        if ($files == NULL){
+            return NULL;
+        }
+        foreach ($files as $file){
+            switch ($file){
+                case "jquery":
+                    echo "<script src=JS/jquery-3.6.4.js></script>";
+                case "rating":
+                    echo "<script src=JS/rating.js></script>";
+            }
+        }
+        
+    }
+
+
     protected function show_head_section(){
         echo '<head>
         <title>Home</title>
-        <link rel="stylesheet" href="CSS/stylesheet.css">
-        </head>';
+        <link rel="stylesheet" href="CSS/stylesheet.css">';
+        $this->show_js_files();
+        
+        echo '</head>';
     }
 
     protected function show_body_start(){

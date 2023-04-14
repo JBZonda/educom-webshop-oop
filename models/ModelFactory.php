@@ -26,7 +26,8 @@ class ModelFactory {
         switch ($name) {
             case "shop":
                 include_once "models/ShopModel.php";
-                return new ShopModel($this->createCrud($name));
+                $js_files = array("jquery","rating");
+                return new ShopModel($this->createCrud($name), $js_files);
                 break;
             case "user":
                 include_once "models/UserModel.php";
