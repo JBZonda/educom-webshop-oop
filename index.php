@@ -1,8 +1,7 @@
 <?php
 include "SessionFunctions.php";
-include "Product.php";
 include "controllers/PageController.php";
-include "CRUD.php";
+include "Crud/CRUD.php";
 include "models/ModelFactory.php";
 session_start();
 

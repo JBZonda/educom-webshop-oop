@@ -11,12 +11,16 @@ class ModelFactory {
     function createCrud($name){
         switch ($name) {
             case "shop":
-                include_once "ShopCrud.php";
+                include_once "Crud/ShopCrud.php";
                 $crud = new ShopCrud($this->crud);
                 break;
             case "user":
-                include_once "UserCrud.php";
+                include_once "Crud/UserCrud.php";
                 $crud = new UserCrud($this->crud);
+                break;
+            case "rating";
+                include_once "Crud/RatingCrud.php";
+                $crud = new RatingCrud($this->crud);
                 break;
         }
         return $crud;
