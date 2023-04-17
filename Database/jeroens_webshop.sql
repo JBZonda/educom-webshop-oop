@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2023 at 04:44 PM
+-- Generation Time: Apr 17, 2023 at 06:15 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -99,6 +99,44 @@ INSERT INTO `products` (`id`, `name`, `discription`, `price`, `image_location`) 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ratings`
+--
+
+CREATE TABLE `ratings` (
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `rating` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ratings`
+--
+
+INSERT INTO `ratings` (`user_id`, `product_id`, `rating`) VALUES
+(1, 2, 3),
+(1, 4, 4),
+(2, 1, 4),
+(2, 4, 2),
+(3, 1, 4),
+(3, 4, 4),
+(4, 1, 4),
+(4, 4, 4),
+(5, 1, 2),
+(5, 4, 2),
+(6, 3, 4),
+(6, 4, 4),
+(7, 3, 3),
+(7, 4, 3),
+(8, 3, 4),
+(8, 4, 4),
+(9, 3, 5),
+(9, 4, 5),
+(10, 3, 5),
+(10, 4, 5);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -140,6 +178,12 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`user_id`,`product_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -165,7 +209,7 @@ ALTER TABLE `order_line`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
