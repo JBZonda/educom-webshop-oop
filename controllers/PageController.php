@@ -4,12 +4,19 @@ include "models/PageModel.php";
 class PageController{
     public $model;
     public $model_factory;
+
     function __construct($model_factory){
         $this->model_factory = $model_factory;
         $this->model = $this->model_factory->createModel("page");
     }
 
     function handle_request(){
+
+        if ($this->is_acction()){
+            $this->do_action();
+            return true;
+        }
+
         $this->process_Request();
         $this->show_response_page();
     }
@@ -232,6 +239,21 @@ class PageController{
     function validate_upload(){
         $fields = array("title", "description", "price");
         $this->model->validate_input_fields($fields);
+    }
+
+/*----------------set-action-------------------*/
+
+    function is_acction(){
+        return key_exists("action",$_GET) ? true : false;
+    }
+
+    function do_action(){
+        switch($_GET["action"]){
+            case "ajax":
+                include "controllers/AJAXController.php";
+                $controler = new AjaxController($this->model_factory);
+                $controler->handle_action();
+        }
     }
 
 /*------------------------------------*/

@@ -20,10 +20,10 @@ class RatingCrud{
     }
 
     function readAverageRating($product_id){
-        $sql = "SELECT AVG(rating) as avg FROM ratings WHERE product_id=:product_id";
+        $sql = "SELECT product_id, AVG(rating) as avg FROM ratings WHERE product_id=:product_id";
         $values = array(":product_id"=>$product_id);
         $result = $this->crud->readOneRow($sql, $values);
-        return floatval($result->avg);
+        return $result;
     }
 
     function readAverageRatingAll(){

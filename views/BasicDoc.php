@@ -14,11 +14,14 @@ abstract class BasicDoc extends HtmlDoc {
             return NULL;
         }
         foreach ($files as $file){
+            
             switch ($file){
                 case "jquery":
                     echo "<script src=JS/jquery-3.6.4.js></script>";
+                    break;
                 case "rating":
                     echo "<script src=JS/rating.js></script>";
+                    break;
             }
         }
         

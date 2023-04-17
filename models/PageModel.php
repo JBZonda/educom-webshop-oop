@@ -28,12 +28,17 @@ class PageModel{
     }
 
     function get_requested_page(){
+        if (key_exists("action",$_GET)) {
+            return NULL;
+        }
+
         if ($this->is_POST) { 
             $page = $_POST["page"];
         } else {
             $page = $_GET["page"];
         }
         return htmlspecialchars($page);
+        
     }
 
     function is_POST(){

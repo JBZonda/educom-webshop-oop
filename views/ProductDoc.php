@@ -24,6 +24,14 @@ abstract class ProductDoc extends FormsDoc{
         <div class="product">
         
         <img src="Images/'. $product->image_location.'" alt="image of product id:  '. $product->id .'">
+        <div class="rating">
+        <span class="rating_star" id="rating_star_1" >☆</span>
+        <span class="rating_star" id="rating_star_2" >☆</span>
+        <span class="rating_star" id="rating_star_3" >☆</span>
+        <span class="rating_star" id="rating_star_4" >☆</span>
+        <span class="rating_star" id="rating_star_5" >☆</span>
+        
+        </div>
         <p>Prijs:'. $product->price.'</p>';
         if ($this->model->logged_in){
             if (array_key_exists($product->id,$this->model->values["cart"])){

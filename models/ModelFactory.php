@@ -41,6 +41,10 @@ class ModelFactory {
                 include_once "models/PageModel.php";
                 return new PageModel($this->crud);
                 break;
+            case "rating":
+                include_once "models/RatingModel.php";
+                return new RatingModel($this->createCrud($name));
+                break;
         }
         return $model;
     }
