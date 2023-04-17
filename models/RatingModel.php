@@ -4,6 +4,7 @@ class RatingModel extends PageModel{
     public $function;
     public $product_id;
     public $user_id;
+    public $rating;
     public $result;
 
     function __construct($crud){
@@ -11,6 +12,7 @@ class RatingModel extends PageModel{
         $this->set_values("function");
         $this->set_values("product_id");
         $this->set_values("user_id");
+        $this->set_values("rating");
     }
 
     function set_values($name){
@@ -23,7 +25,10 @@ class RatingModel extends PageModel{
                     $this->product_id = $_GET["product_id"];
                     break;
                 case "user_id":
-                    $this->product_id = $_GET["user_id"];
+                    $this->user_id = $_GET["user_id"];
+                    break;
+                case "rating":
+                    $this->rating = $_GET["rating"];
                     break;
             }
         }

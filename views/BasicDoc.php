@@ -30,7 +30,7 @@ abstract class BasicDoc extends HtmlDoc {
 
     protected function show_head_section(){
         echo '<head>
-        <title>Home</title>
+        <title>'.$this->model->page.'</title>
         <link rel="stylesheet" href="CSS/stylesheet.css">';
         $this->show_js_files();
         

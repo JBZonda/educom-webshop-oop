@@ -6,6 +6,11 @@ abstract class ProductDoc extends FormsDoc{
         <div class="product">
         <p >'. $product->name . '</p>
         <img src="Images/'. $product->image_location.'" alt="image of '. $product->id .'">
+        <div class="rating">';
+        
+        $this->show_rating_stars("rating_star_product_" .$product->id . "_");
+        
+        echo '</div>
         <p>Prijs:'. $product->price.'</p>';
         if ($this->model->logged_in){
             if (array_key_exists($product->id, $this->model->values["cart"])){
@@ -25,13 +30,16 @@ abstract class ProductDoc extends FormsDoc{
         
         <img src="Images/'. $product->image_location.'" alt="image of product id:  '. $product->id .'">
         <div class="rating">
-        <span class="rating_star" id="rating_star_1" >☆</span>
-        <span class="rating_star" id="rating_star_2" >☆</span>
-        <span class="rating_star" id="rating_star_3" >☆</span>
-        <span class="rating_star" id="rating_star_4" >☆</span>
-        <span class="rating_star" id="rating_star_5" >☆</span>
+        <p >Rating:</p>';
+        $this->show_rating_stars("rating_star_");
         
-        </div>
+        if ($this->model->logged_in){
+            echo '</div>
+            <div class="user_rating">
+            <p >Persoonlijke rating:</p>';
+            $this->show_rating_stars("rating_star_user_");
+        }
+        echo '</div>
         <p>Prijs:'. $product->price.'</p>';
         if ($this->model->logged_in){
             if (array_key_exists($product->id,$this->model->values["cart"])){
@@ -43,5 +51,16 @@ abstract class ProductDoc extends FormsDoc{
         echo '<p>Beschrijving:<br>'. $product->discription.'</p>
         </div>';
     }
+
+    function show_rating_stars($id_name){
+        $number = 1;
+        while ($number <= 5){
+            echo '<span class="rating_star" id="'. $id_name. $number .'" >☆</span>';
+            $number += 1;
+        }
+
+    }
+
+
 }
 ?>

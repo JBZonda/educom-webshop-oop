@@ -33,5 +33,12 @@ class RatingCrud{
         return $result;
     }
 
+    function readUserRating($user_id, $product_id){
+        $sql = "SELECT user_id, rating FROM ratings WHERE user_id=:user_id AND product_id=:product_id";
+        $values = array(":user_id"=>$user_id, ":product_id"=>$product_id);
+        $result = $this->crud->readOneRow($sql, $values);
+        return $result;
+    }
+
 }
 ?>

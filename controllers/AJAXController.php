@@ -14,10 +14,12 @@ class AJAXController{
     function handle_action(){
         switch($this->model->function){
             case "createRating":
-                $this->model->crud->readAverageRating();
+                $user_id = $this->model->session_handler->get_user_id();
+                $this->model->crud->createRating($user_id, $this->model->product_id, $this->model->rating);
                 break;
             case "updateRating":
-                $this->model->crud->readAverageRating();
+                $user_id = $this->model->session_handler->get_user_id();
+                $this->model->crud->updateRating($user_id, $this->model->product_id, $this->model->rating);
                 break;
             case "readAverageRating":
                 $this->model->result = $this->model->crud->readAverageRating($this->model->product_id);
@@ -25,6 +27,12 @@ class AJAXController{
             case "readAverageRatingAll":
                 $this->model->result = $this->model->crud->readAverageRatingAll();
                 break;
+            
+            case "readUserRating":
+                $user_id = $this->model->session_handler->get_user_id();
+                $this->model->result = $this->model->crud->readUserRating($user_id, $this->model->product_id);
+                break;
+
         }
 
         $this->show_response();

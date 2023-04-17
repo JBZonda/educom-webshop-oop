@@ -20,26 +20,15 @@ class AJAXDoc{
                 $this->json = json_encode($this->model->result);
                 break;
             case "readAverageRatingAll":
+                $this->json = json_encode($this->model->result);
+                break;
+            case "readUserRating":
+                $this->json = json_encode($this->model->result);
                 break;
         }
 
         echo $this->json;
     }
-
-
-    /* not used found json_encode instead*/
-    function build_json($result){
-        $json = "{";
-        foreach ($result as $key => $value){
-            $json = $json . '"'.$key . '":' . $value .',';
-        }
-
-        $json[-1] = "}";
-
-        $this->json = $json;
-
-    }
-
 }
 
 ?>
