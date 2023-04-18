@@ -70,7 +70,7 @@ function set_rating_webshop(data){
 }
 
 function make_get_url(func, product_id=0, rating=0){
-    let get_url = "https://localhost/educom-webshop-oop/index.php?action=ajax";
+    let get_url = "index.php?action=ajax";
     get_url = get_url + "&function=" + func;
     if (product_id != 0){
         get_url = get_url + "&product_id=" + product_id;
