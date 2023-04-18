@@ -2,10 +2,8 @@
 
 $(document).ready(function(){
     var url = window.location.href;
-    
-    if (url.indexOf("detail") == 52){
-        let product_id = url.slice(62);
-        
+    if (url.includes("detail")){
+        let product_id = url.slice(url.indexOf("detail") + 10);
         set_rating_detail(product_id);
         
         $.getJSON(make_get_url("readUserRating", product_id), function(data){
@@ -37,7 +35,7 @@ $(document).ready(function(){
                     });
             }
         });
-    } else if (url.indexOf("=webshop") == 51){
+    } else if (url.includes("=webshop")){
         let get_url = make_get_url("readAverageRatingAll");
         $.getJSON(get_url, function(data){
             set_rating_webshop(data);
